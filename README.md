@@ -1,2 +1,2 @@
 # Deep Characters Pytorch
-Pytorch implementation of the components mentioned in Deep Dynamic Characters(Siggraph 2021)
+Pytorch implementation part of the components mentioned in Deep Dynamic Characters(Siggraph 2021)

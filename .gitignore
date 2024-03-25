@@ -3,4 +3,6 @@
 **/*.egg-info
 **/__pycache__
 **/requirements.txt
-WootGCN.py
+**/**.pth
+./examples/checkpoints/**.**
+./examples/mesh_output/**.**

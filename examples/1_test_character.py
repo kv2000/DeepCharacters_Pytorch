@@ -1,5 +1,5 @@
 """
-@File: test_skeleton.py
+@File: 1_test_character.py
 @Author: Heming Zhu
 @Email: hezhu@mpi-inf.mpg.de
 @Date: 2024-03-25
@@ -23,7 +23,7 @@ import CSVHelper
 if __name__ == '__main__':
         
     # Set up command line argument parser
-    parser = ArgumentParser(description="Why you smile")
+    parser = ArgumentParser(description="Nothing To Say")
     parser.add_argument('--conf', type=str, default='./configs/test_config.conf')
     
     args = parser.parse_args(sys.argv[1:])
@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
     # load the dofs, remove the end_frame entry to read all
     dof_arr = CSVHelper.load_csv_sequence_2D(
-        preload_conf['training']['skeleton_angles'], type='float', skipRows=1, skipColumns=1 #, end_frame=(1000)
+        preload_conf['train']['skeleton_angles'], type='float', skipRows=1, skipColumns=1 #, end_frame=(1000)
     )
         
     #################################################################################################
