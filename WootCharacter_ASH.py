@@ -1,11 +1,12 @@
 """
-@File: WootCharacter.py
+@File: WootCharacter_ASH.py
 @Author: Heming Zhu
 @Email: hezhu@mpi-inf.mpg.de
 @Date: 2023-09-25
-@Desc: The pytorch mbedded graph character (in Real-time Deep Dynamic Characters. Sigraph2021, Marc Habermann et.al ),
+@Desc: The pytorch learnable/not learnable embedded graph charactor (in Real-time Deep Dynamic Characters. Sigraph2021, Marc Habermann et.al ),
 support for the charactor with/without hands. 
 Could degrade to the skinning only version with the settings.
+Modified for ASH to expose the quatarions.
 """
 
 import os
@@ -26,7 +27,7 @@ from DeepCharacters_Pytorch.character_utils import dual_quad_to_trans_vec, batch
 
 from einops import rearrange
 
-class WootCharacter(nn.Module):
+class WootCharacterWithQuat(nn.Module):
     def __init__(
             self, 
             skeleton_dir = None, skinning_dir = None, template_mesh_dir=None, graph_dir = None, rest_pose_dir = None, 
@@ -35,7 +36,7 @@ class WootCharacter(nn.Module):
             hand_mask_dir = None, 
             use_sparse = True
         ):
-        super(WootCharacter, self).__init__()
+        super(WootCharacterWithQuat, self).__init__()
         
         print('start to intialize character')
         self.skeleton_dir = skeleton_dir
@@ -57,7 +58,6 @@ class WootCharacter(nn.Module):
         
         # if wanna use it in dataloader (worker > 0) then should disable
         self.use_sparse = use_sparse
-
         ############################################################
         #                 character meta data
         ############################################################
@@ -92,11 +92,11 @@ class WootCharacter(nn.Module):
         self.laplacian_temp_weight = None
         self.sparse_laplacian = None
         self.laplacian_row_weight = None
-        
+
         self.edge_temp_st = None
         self.edge_temp_ed = None
 
-        # mask for the hands
+        # the mask regarding the hands
         self.hand_mask = None
 
         ############################################################
@@ -251,7 +251,7 @@ class WootCharacter(nn.Module):
             [self.graph_verts, torch.ones([self.graph_obj_reader.numberOfVertices,1]).to(self.device)], dim = -1
         )
         self.graph_verts_num = self.graph_obj_reader.numberOfVertices
-
+        
         t_graph_verts = np.array(self.graph_obj_reader.vertexCoordinates).reshape([-1, 3])
         t_obj_verts = np.array(self.obj_reader.vertexCoordinates).reshape([-1, 3])
 
@@ -326,6 +326,8 @@ class WootCharacter(nn.Module):
         temp_to_node_connect_node_id = [] 
         temp_to_node_connect_temp_id = []
         temp_to_node_connect_weight = []
+        temp_to_node_connect_fst = []
+        
         unconnected_vertices = 0
 
         max_connect = 0
@@ -335,13 +337,27 @@ class WootCharacter(nn.Module):
         # then fetch the connected vertices
         for i in range(self.vert_num):
             cur_vert_to_node_dist = embedded_to_template_distance[:,i] / (1.0 * embedded_node_radius)
-            nearby_id = np.where(cur_vert_to_node_dist <= 1)[0] 
-            
-            # in case nothing is linked
+            nearby_id = np.where(cur_vert_to_node_dist <= 1)[0]
+                         
             if nearby_id.shape[0] < 1:
                 unconnected_vertices +=1
                 nearby_id = np.where(cur_vert_to_node_dist <= 2)[0]
-            
+                            
+                nearby_dist = cur_vert_to_node_dist[nearby_id]
+                nearby_weight = np.exp(-0.5 * nearby_dist * nearby_dist)
+                
+                temp_to_node_connect_node_id.append(nearby_id)
+                temp_to_node_connect_temp_id.append(np.ones_like(nearby_id) * i)
+                temp_to_node_connect_weight.append(nearby_weight)
+                link_num.append(nearby_id.shape[0])
+                
+                max_connect = max(max_connect, nearby_dist.shape[0])
+                min_connect = min(min_connect, nearby_dist.shape[0])
+                
+                temp_to_node_connect_fst.append(np.ones_like(nearby_id) * nearby_id[0])
+                                
+            else:
+                  
                 nearby_dist = cur_vert_to_node_dist[nearby_id]
                 nearby_weight = np.exp(-0.5 * nearby_dist * nearby_dist)
 
@@ -349,22 +365,12 @@ class WootCharacter(nn.Module):
                 temp_to_node_connect_temp_id.append(np.ones_like(nearby_id) * i)
                 temp_to_node_connect_weight.append(nearby_weight)
                 link_num.append(nearby_id.shape[0])
-                
                 max_connect = max(max_connect, nearby_dist.shape[0])
                 min_connect = min(min_connect, nearby_dist.shape[0])
-                                
-            else:
-                nearby_dist = cur_vert_to_node_dist[nearby_id]
-                nearby_weight = np.exp(-0.5 * nearby_dist * nearby_dist)
                 
-                temp_to_node_connect_node_id.append(nearby_id)
-                temp_to_node_connect_temp_id.append(np.ones_like(nearby_id) * i)
-                temp_to_node_connect_weight.append(nearby_weight)
-                link_num.append(nearby_id.shape[0])
-                max_connect = max(max_connect, nearby_dist.shape[0])
-                min_connect = min(min_connect, nearby_dist.shape[0])
+                temp_to_node_connect_fst.append(np.ones_like(nearby_id) * nearby_id[0])
         
-            
+        
         # then normalize the weights 
         for i in range(self.vert_num):
             temp_to_node_connect_weight[i] = temp_to_node_connect_weight[i] / np.sum(temp_to_node_connect_weight[i])
@@ -376,12 +382,14 @@ class WootCharacter(nn.Module):
         temp_to_node_connect_node_id = np.concatenate(temp_to_node_connect_node_id, axis = 0)
         temp_to_node_connect_temp_id = np.concatenate(temp_to_node_connect_temp_id, axis = 0)
         temp_to_node_connect_weight = np.concatenate(temp_to_node_connect_weight, axis = 0)
+        temp_to_node_connect_fst = np.concatenate(temp_to_node_connect_fst, axis = 0)
         
         # the node -> vert link
         self.link_temp_id = torch.LongTensor(temp_to_node_connect_temp_id).to(self.device)
         self.link_node_id = torch.LongTensor(temp_to_node_connect_node_id).to(self.device)
         self.link_weight = torch.FloatTensor(temp_to_node_connect_weight).to(self.device)
-        
+        self.link_fst = torch.LongTensor(temp_to_node_connect_fst).to(self.device)
+                                
         iden_idx = torch.linspace(
             start=0, end = self.link_weight.shape[0] - 1, steps=self.link_weight.shape[0]
         ).long().to(self.device)
@@ -467,6 +475,7 @@ class WootCharacter(nn.Module):
         self.skinning_weights_value = torch.FloatTensor(self.skinning_weights_value).to(self.device)
         self.skinning_weights_fst = torch.LongTensor(self.skinning_weights_fst).to(self.device)
         
+        
         self.skinning_weights_dqs = torch.sparse_coo_tensor(
             indices= torch.stack([self.skinning_weights_st, self.skinning_weights_iden], dim = 0),
             values=self.skinning_weights_value, size=(self.vert_num, temp_link_id_num), device=self.device
@@ -509,7 +518,7 @@ class WootCharacter(nn.Module):
                
         translation_vec = translation_mat[...,:3, 3]
         rotation_mat = translation_mat[...,:3,:3]
-
+        
         rot_quad = rotation_matrix_to_quaternion(
             rotation_mat.view([-1, 3, 3]).contiguous(),
             order = QuaternionCoeffOrder.WXYZ
@@ -559,7 +568,7 @@ class WootCharacter(nn.Module):
             
             weighted_rotation= torch.sparse.mm(
                 self.skinning_weights_dqs, link_rotation
-            ).reshape([self.vert_num, batch_size, 4])
+            ).reshape([self.vert_num, batch_size, 4])         
 
         weighted_translation = rearrange(
             weighted_translation, 'v b c -> b v c'
@@ -573,7 +582,8 @@ class WootCharacter(nn.Module):
             weighted_rotation, p=2, dim = -1
         )
 
-        scale_mask = (raw_scale < 1e-6).float()
+        scale_mask = (raw_scale < 1e-9).float()
+
         fin_scale = 1. / (raw_scale + scale_mask)
 
         weighted_rotation = weighted_rotation * fin_scale[...,None]
@@ -691,56 +701,7 @@ class WootCharacter(nn.Module):
 
         return ret_posed_template, pickedEularR, pickedT
 
-    def compute_posed_template_only(self, dof = None, cached_global_transform = None):
-        
-        if not(cached_global_transform is None):
-            cur_global_tranform = cached_global_transform
-        else:
-            cur_global_tranform, _, _ = self.skeleton.forward(
-                dof
-            )
-
-        picked_global_transform = cur_global_tranform[:,self.skinning_id_to_skeleton_id,:,:]
-
-        org_translation_mat = (
-            picked_global_transform @ self.rest_pose_global_transformation_mat_inv
-        )
-        
-        if self.blending_type == 'lbs':
-            blended_mat = self.lbs_blending(
-                org_translation_mat
-            )
-        elif self.blending_type == 'dqs':
-            blended_mat = self.dqs_blending(
-                org_translation_mat
-            )
-
-        batch_size = blended_mat.shape[0]
-                
-        picked_blended_mat = (blended_mat[:,self.graph_node_idx,:,:])[:,self.link_node_id, :, :]
-        
-        picked_temp_verts_nr = (
-            picked_blended_mat @ self.temp_verts_homo[..., self.link_temp_id, :][...,None]
-        )[...,0]
-        
-        vectors = picked_temp_verts_nr.transpose(0, 1).reshape(self.link_node_id.shape[0], -1)
-
-        if self.use_sparse:
-            ret_posed_template = torch.sparse.mm(
-                self.sparse_link_weight_matrix, vectors
-            )
-        else:
-            ret_posed_template = torch.mm(
-                self.sparse_link_weight_matrix, vectors
-            )            
-
-        ret_posed_template = ret_posed_template.reshape([-1, batch_size, 4]).transpose(0, 1)
-        
-        ret_posed_template = ret_posed_template[...,:3] / ret_posed_template[...,3:]
-    
-        return ret_posed_template
-
-    def compute_embedded_graph_deformation(self, blended_mat = None, deltaR = None, deltaT = None, perVertex_displacement=None):
+    def compute_embedded_graph_deformation_test(self, blended_mat = None, deltaR = None, deltaT = None, perVertex_displacement=None):
         
         batch_size = blended_mat.shape[0]
         org_template = self.temp_verts
@@ -756,115 +717,103 @@ class WootCharacter(nn.Module):
         picked_deltaT = deltaT[:,self.link_node_id]
 
         v_nr = (picked_deltaR_mat @ (picked_temp_verts - picked_node_verts)[..., None])[...,0] + picked_node_verts + picked_deltaT
+            
         vectors = v_nr.transpose(0, 1).reshape(self.link_node_id.shape[0], -1)
 
-        if self.use_sparse:
-            eg_canoical = torch.sparse.mm(self.sparse_link_weight_matrix, vectors)
-        else:
-            eg_canoical = torch.mm(self.sparse_link_weight_matrix, vectors)
+        eg_canoical = torch.mm(self.sparse_link_weight_matrix, vectors)
 
         eg_canoical = eg_canoical.reshape([self.vert_num, -1, 3]).transpose(0, 1)
         eg_canoical = convert_points_to_homogeneous(eg_canoical)
 
-        delta_canoical = eg_canoical.clone()
-
+        delta_canoical = eg_canoical
         delta_canoical[...,:3] += perVertex_displacement
-
-        if self.deformation_type == 'embedded':
-            picked_blended_mat = (blended_mat[:,self.graph_node_idx,:,:])[:,self.link_node_id, :, :]
-            if self.compute_pose:
-                picked_temp_verts_nr = (
-                    picked_blended_mat @ self.temp_verts_homo[..., self.link_temp_id, :][...,None]
-                )[...,0]
-                
-                vectors = picked_temp_verts_nr.transpose(0, 1).reshape(self.link_node_id.shape[0], -1)
-
-                if self.use_sparse:
-                    ret_posed_template = torch.sparse.mm(
-                        self.sparse_link_weight_matrix, vectors
-                    )
-                else:
-                    ret_posed_template = torch.mm(
-                        self.sparse_link_weight_matrix, vectors
-                    )                    
-
-                ret_posed_template = ret_posed_template.reshape([-1, batch_size, 4]).transpose(0, 1)
-                
-                ret_posed_template = ret_posed_template[...,:3] / ret_posed_template[...,3:]
-            
-            else:
-                ret_posed_template = org_template
-            
-            if self.compute_eg:
-                picked_temp_verts_nr = (
-                    picked_blended_mat @ eg_canoical[..., self.link_temp_id, :][...,None]
-                )[...,0]
-                
-                vectors = picked_temp_verts_nr.transpose(0, 1).reshape(self.link_node_id.shape[0], -1)
-
-                if self.use_sparse:
-                    ret_posed_eg = torch.sparse.mm(
-                        self.sparse_link_weight_matrix, vectors
-                    )
-                else:
-                    ret_posed_eg = torch.mm(
-                        self.sparse_link_weight_matrix, vectors
-                    )                    
-
-                ret_posed_eg = ret_posed_eg.reshape([-1, batch_size, 4]).transpose(0, 1)
-
-                ret_posed_eg = ret_posed_eg[...,:3] / ret_posed_eg[...,3:]
-
-            else:
-                ret_posed_eg = eg_canoical
-            
-            if self.compute_delta:
-                picked_temp_verts_nr = (
-                    picked_blended_mat @ delta_canoical[..., self.link_temp_id, :][...,None]
-                )[...,0]
-                
-                vectors = picked_temp_verts_nr.transpose(0, 1).reshape(self.link_node_id.shape[0], -1)
-
-                if self.use_sparse:
-                    ret_posed_delta = torch.sparse.mm(
-                        self.sparse_link_weight_matrix, vectors
-                    )
-                else:
-                    ret_posed_delta = torch.mm(
-                        self.sparse_link_weight_matrix, vectors
-                    )
-
-                ret_posed_delta = ret_posed_delta.reshape([-1, batch_size, 4]).transpose(0, 1)
-                ret_posed_delta = ret_posed_delta[...,:3] / ret_posed_delta[...,3:]
-            else:
-                ret_posed_delta = delta_canoical
         
-        elif self.deformation_type == 'lbs':
+        if self.deformation_type == 'embedded':
+              
+            picked_blended_mat = (blended_mat[:,self.graph_node_idx,:,:])[:,self.link_node_id, :, :]
+
+            link_num =  picked_blended_mat.shape[1]
+            translation_vec = picked_blended_mat[...,:3, 3]
+            rotation_mat = picked_blended_mat[...,:3,:3]
+
+            rot_quad = rotation_matrix_to_quaternion(
+                rotation_mat.view([-1, 3, 3]).contiguous(),
+                order = QuaternionCoeffOrder.WXYZ
+            ).view([batch_size, link_num, -1])
+
+            normalized_rot_quad = torch.nn.functional.normalize(rot_quad, dim = -1)
+            selected_first_rot_quad = normalized_rot_quad[:,self.link_fst,:]
+            sign_to_first = (torch.sum(
+                selected_first_rot_quad * normalized_rot_quad, dim = -1
+            ) > 0).float()
+
+            fin_sign = sign_to_first * 2 - 1
             
-            if self.compute_pose:
-                ret_posed_template = (blended_mat @ self.temp_verts_homo[...,None])[...,0]
-                ret_posed_template = ret_posed_template[:, :, :3] / ret_posed_template[:, :,3:]
-            else:
-                ret_posed_template = org_template
+            translation_quad = compute_trans_quad(
+                q = rot_quad,
+                t = translation_vec
+            )
             
-            if self.compute_eg:
-                ret_posed_eg = (blended_mat @ eg_canoical[...,None])[...,0]
-                ret_posed_eg = ret_posed_eg[:, :, :3] / ret_posed_eg[:, :,3:]
-            else:
-                ret_posed_eg = eg_canoical
             
-            if self.compute_delta:
-                ret_posed_delta = (blended_mat @ delta_canoical[...,None])[...,0]
-                ret_posed_delta = ret_posed_delta[:, :, :3] / ret_posed_delta[:, :, 3:]
-            else:
-                ret_posed_delta = delta_canoical
-           
+            translation_quad = translation_quad * fin_sign[...,None]
+            rot_quad = rot_quad * fin_sign[...,None]
+
+            translation_quad = rearrange(
+                translation_quad, 'b l c -> l (b c)'
+            )
+
+            rot_quad = rearrange(
+                rot_quad, 'b l c -> l (b c)'
+            )
+
+            weighted_translation = torch.mm(
+                self.sparse_link_weight_matrix, translation_quad
+            ).reshape([self.vert_num, batch_size, 4])
+            
+            weighted_rotation = torch.mm(
+                self.sparse_link_weight_matrix, rot_quad
+            ).reshape([self.vert_num, batch_size, 4])
+
+            weighted_translation = rearrange(
+                weighted_translation, 'v b c -> b v c'
+            )
+
+            weighted_rotation = rearrange(
+                weighted_rotation, 'v b c -> b v c'
+            )
+
+            raw_scale = torch.norm(
+                weighted_rotation, p=2, dim = -1
+            )
+
+            scale_mask = (raw_scale < 1e-9).float()
+
+            fin_scale = 1. / (raw_scale + scale_mask)
+
+            weighted_rotation = weighted_rotation * fin_scale[...,None]
+            weighted_translation = weighted_translation * fin_scale[...,None]
+
+            fin_rot_mat = quaternion_to_rotation_matrix(
+                weighted_rotation.reshape([-1,4]), QuaternionCoeffOrder.WXYZ
+            ).reshape([-1, 3, 3])
+
+            fin_trans_vec = dual_quad_to_trans_vec(
+                weighted_rotation, weighted_translation
+            ).reshape([-1, 3])
+
+            fin_transform_mat = Rt_to_matrix4x4(
+                fin_rot_mat, fin_trans_vec[...,None]
+            ).reshape([batch_size, self.vert_num, 4, 4])
+            
+            ret_posed_delta = (fin_transform_mat @ delta_canoical[...,None])[...,0]
+            ret_posed_delta = ret_posed_delta[...,:3] / ret_posed_delta[...,3:]
+                
         else:
             print('deformation type', self.deformation_type, ' not supported')
-        
-        return ret_posed_template, ret_posed_eg, ret_posed_delta, org_template, eg_canoical, delta_canoical
+                            
+        return ret_posed_delta, delta_canoical, weighted_translation, weighted_rotation
 
-    def forward(self, dof = None, delta_R = None, delta_T = None, per_vertex_T = None, cached_global_transform = None):
+    def forward_test(self, dof = None, delta_R = None, delta_T = None, per_vertex_T = None, cached_global_transform = None):
         """
             Parameters:
             dof - skelton dof
@@ -873,29 +822,22 @@ class WootCharacter(nn.Module):
             per_vertex_T - per-vertex transformation on the mesh template
             
             Returns:
-            ret_posed_template, ret_posed_eg, ret_posed_delta - pose deformed template / with embedded deformation / with embedded and per-vertex deformation   
-            org_template, eg_canoical, delta_canoical - canonical template / with embedded deformation / with embedded and per-vertex deformation   
-            cur_global_tranform - skeleton joints
+            ret_posed_delta - posed template with embedded and per-vertex deformation   
+            delta_canoical - canonical template with embedded and per-vertex deformation   
+            fin_translation_quad - translation quaterion for each mesh vertex 
+            fin_rotation_quad - rotation quaterion for each mesh vertex 
+            cur_global_tranform - skeleton joint positions
         """
-        
+ 
         if not (cached_global_transform is None):
             cur_global_tranform = cached_global_transform
         else:
             cur_global_tranform, _, _ = self.skeleton.forward(
                 dof
             )
-        
-        if delta_R == None:
-            delta_R = torch.zeros(size = [dof.shape[0], self.graph_verts.shape[0], 3]).to(self.device)
-            
-        if delta_T == None:
-            delta_T = torch.zeros(size = [dof.shape[0], self.graph_verts.shape[0], 3]).to(self.device)
-        
-        if per_vertex_T == None:
-            per_vertex_T = torch.zeros(size = [dof.shape[0], self.temp_verts.shape[0], 3]).float().to(self.device)
-           
+
         picked_global_transform = cur_global_tranform[:,self.skinning_id_to_skeleton_id,:,:]
-   
+
         org_translation_mat = (
             picked_global_transform @ self.rest_pose_global_transformation_mat_inv
         )
@@ -909,10 +851,10 @@ class WootCharacter(nn.Module):
                 org_translation_mat
             )
         
-        ret_posed_template, ret_posed_eg, ret_posed_delta, org_template, eg_canoical, delta_canoical = self.compute_embedded_graph_deformation(
+        ret_posed_delta, delta_canoincal, fin_translation_quad, fin_rotation_quad = self.compute_embedded_graph_deformation_test(
             blended_mat = blended_mat, 
             deltaR = delta_R, deltaT = delta_T, 
             perVertex_displacement = per_vertex_T
         )
 
-        return ret_posed_template, ret_posed_eg, ret_posed_delta, org_template, eg_canoical[...,:3], delta_canoical[...,:3], cur_global_tranform
+        return ret_posed_delta, delta_canoincal, fin_translation_quad, fin_rotation_quad, cur_global_tranform[:,:, :3, -1]
