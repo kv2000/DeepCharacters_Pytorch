@@ -3,6 +3,5 @@
 **/*.egg-info
 **/__pycache__
 **/requirements.txt
-WootCharacter_ASH.py
-WootCharacter.py
 WootGCN.py
+WootCharacter_ASH.py

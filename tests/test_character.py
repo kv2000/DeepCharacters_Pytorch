@@ -3,10 +3,11 @@
 @Author: Heming Zhu
 @Email: hezhu@mpi-inf.mpg.de
 @Date: 2024-03-25
-@Desc: Some test scripts for the character skeleton.
+@Desc: Some test scripts for the character.
 """
 import sys
 sys.path.append("../")
+sys.path.append("../../")
 
 import os
 from pyhocon import ConfigFactory
@@ -15,12 +16,14 @@ from argparse import ArgumentParser, Namespace
 import torch
 
 from WootSkeleton import WootSkeleton
+from WootCharacter import WootCharacter
+
 import CSVHelper
 
 if __name__ == '__main__':
         
     # Set up command line argument parser
-    parser = ArgumentParser(description="Nothing To Say")
+    parser = ArgumentParser(description="Why you smile")
     parser.add_argument('--conf', type=str, default='./configs/test_config.conf')
     
     args = parser.parse_args(sys.argv[1:])
@@ -33,9 +36,9 @@ if __name__ == '__main__':
     #################################################################################################
     
     # create the skeleton 
-    temp_skeleton = WootSkeleton(
-        skeleton_dir= preload_conf['character']['skeleton_dir'],
-        device = 'cuda'
+    test_charactor = WootCharacter(
+        **preload_conf['character'], 
+        device='cuda'
     )
 
     # load the dofs, remove the end_frame entry to read all
@@ -44,19 +47,31 @@ if __name__ == '__main__':
     )
         
     #################################################################################################
+    # if delta_R, delta_T is set None, then no non-rigid deformation
+    # if per_vertex_T is set None, then no non-rigid deformation
     
-    # b X (joint/dof num) X 4 X 4
-    ret_joint_transformation, ret_local_joint_translation, ret_local_joint_transformation = temp_skeleton.forward(
-        torch.FloatTensor(dof_arr[:1,:]).to('cuda')
+    posed_org, posed_eg, posed_delta, org_canonical, eg_canoical, delta_canoical, ret_global_tranform = test_charactor.forward(
+        dof = torch.FloatTensor(dof_arr[500:600]).to('cuda'),
+        delta_R=None, delta_T=None, per_vertex_T=None
     )
     
-    ret_joint_postion = ret_joint_transformation[:,:,:3,3]
-    
-
-    # dump the joint/dof positions,
+    # duuump 
     import trimesh
+    
     trimesh.Trimesh(
-        vertices=ret_joint_postion[0].detach().cpu().numpy()
-    ).export('joint_position.ply')
+        vertices = posed_delta[0].detach().cpu().numpy(), 
+        faces = test_charactor.temp_faces.cpu().numpy(), 
+        process= False
+    ).export('posed_delta.ply')
 
+    trimesh.Trimesh(
+        vertices = delta_canoical[0].detach().cpu().numpy(), 
+        faces = test_charactor.temp_faces.cpu().numpy(), 
+        process= False
+    ).export('delta_canoical.ply')
+    
+    trimesh.Trimesh(
+        vertices=ret_global_tranform[0,:,:3,3].detach().cpu().numpy()
+    ).export('joint_position.ply')
+    
     

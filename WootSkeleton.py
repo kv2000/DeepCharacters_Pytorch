@@ -3,7 +3,7 @@
 @Author: Heming Zhu
 @Email: hezhu@mpi-inf.mpg.de
 @Date: 2023-09-25
-@Desc: The (minimal usalbe) pytorch skeleton implementation for the character models in DynaCap(later) dataset, which consumes the dofs to generate the joint translations/transformations. 
+@Desc: The (maybe minimal usable) pytorch skeleton implementation for the character models in DynaCap(later) dataset, which consumes the dofs to generate the joint translations/transformations. 
 """
 
 import os
