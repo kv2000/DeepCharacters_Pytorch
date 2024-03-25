@@ -1,0 +1,653 @@
+Skeletool Skeleton Definition V1.0
+joints: 173
+  Root_tx              prismatic none                          0        400         69          1          0          0        1.0
+  Root_ty              prismatic Root_tx                       0          0          0          0          1          0        1.0
+  Root_tz              prismatic Root_ty                       0          0          0          0          0          1        1.0
+  Root_ry              revolute  Root_tz                       0          0          0          0          1          0        1.0
+  Root_rz              revolute  Root_ry                       0          0          0          0          0          1        1.0
+  Root_rx              revolute  Root_rz                       0          0          0          1          0          0        1.0
+  GlobalScale          prismatic Root_rx                       0          0          0          1          0          0        1.0
+  Spine4_ry            revolute  GlobalScale                   0    45.3415   -17.6134          0          1          0        1.0
+  Spine4_rz            revolute  Spine4_ry                     0          0          0          0          0          1        1.0
+  Spine4_rx            revolute  Spine4_rz                     0          0          0          1          0          0        1.0
+  Spine3_ty            prismatic GlobalScale                   0      -85.8   -7.67317          0         -1          0        1.0
+  Spine3_ry            revolute  Spine3_ty                     0          0          0          0         -1          0        1.0
+  Spine3_rz            revolute  Spine3_ry                     0          0          0          0          0         -1        1.0
+  Spine3_rx            revolute  Spine3_rz                     0          0          0         -1          0          0        1.0
+  Spine2_ty            prismatic Spine3_rx                     0   -88.5903    -5.4061          0         -1          0        1.0
+  Spine2_ry            revolute  Spine2_ty                     0          0          0          0         -1          0        1.0
+  Spine2_rz            revolute  Spine2_ry                     0          0          0          0          0         -1        1.0
+  Spine2_rx            revolute  Spine2_rz                     0          0          0         -1          0          0        1.0
+  Spine1_ty            prismatic Spine2_rx                     0   -74.0287   -7.93476          0         -1          0        1.0
+  Spine1_ry            revolute  Spine1_ty                     0          0          0          0         -1          0        1.0
+  Spine1_rz            revolute  Spine1_ry                     0          0          0          0          0         -1        1.0
+  Spine1_rx            revolute  Spine1_rz                     0          0          0         -1          0          0        1.0
+  Spine_ty             prismatic Spine1_rx                     0   -97.6586    26.1585          0         -1          0        1.0
+  Spine_ry             revolute  Spine_ty                      0          0          0          0         -1          0        1.0
+  Spine_rz             revolute  Spine_ry                      0          0          0          0          0         -1        1.0
+  Spine_rx             revolute  Spine_rz                      0          0          0         -1          0          0        1.0
+  Neck_ry              revolute  Spine4_rx                     0    62.6061   -43.8592          0   0.851836  -0.523808        1.0
+  Neck_rz              revolute  Neck_ry                       0          0          0          0   0.523808   0.851836        1.0
+  Neck_rx              revolute  Neck_rz                       0          0          0          1          0          0        1.0
+  Head_ry              revolute  Neck_rx                       0    75.1623   -22.4964          0          1          0        1.0
+  Head_rz              revolute  Head_ry                       0          0          0          0          0          1        1.0
+  Head_rx              revolute  Head_rz                       0          0          0          1          0          0        1.0
+  HeadEE               revolute  Head_rx                       0    156.777   -7.58598          0          1          0        1.0
+  LeftShoulder_ry      revolute  GlobalScale            -37.6683    73.5927   -79.3476          0         -1          0        1.0
+  LeftShoulder_rz      revolute  LeftShoulder_ry               0          0          0  -0.460401          0  -0.887711        1.0
+  LeftArm_tx           prismatic LeftShoulder_rz        -95.7403   -22.4963    28.8618         -1          0          0        1.0
+  LeftArm_rz           revolute  LeftArm_tx                    0          0          0          0          0         -1        1.0
+  LeftArm_rx           revolute  LeftArm_rz                    0          0          0          0          1          0        1.0
+  LeftArm_ry           revolute  LeftArm_rx                    0          0          0          1          0          0        1.0
+  LeftArmScale         prismatic LeftArm_ry                    0          0          0          1          0          0        1.0
+  LeftForeArm_rx       revolute  LeftArmScale           -261.346          0          0          0          1          0        1.0
+  LeftForeArm_rz       revolute  LeftForeArm_rx                0          0          0          0          0         -1        1.0
+  LeftForeArmScale     prismatic LeftForeArm_rz                0          0          0          1          0          0        1.0
+  LeftForeArmRoll      revolute  LeftForeArmScale              0          0          0         -1          0          0        1.0
+  LeftHand_rx          revolute  LeftForeArmRoll        -225.046          0          0          0          1          0        1.0
+  LeftHand_ry          revolute  LeftHand_rx                   0          0          0          0          0         -1        1.0
+  LeftHandScale        prismatic LeftHand_ry                   0          0          0          1          0          0        1.0
+  LeftHandThumb1_rz    revolute  LeftHandScale          -15.7108   -8.74469   -22.8238          0          0         -1        1.0
+  LeftHandThumb1       revolute  LeftHandThumb1_rz             0          0          0          0          1          0        1.0
+  LeftHandThumb2       revolute  LeftHandThumb1         -34.9788   -17.4894          0          0          1          0        1.0
+  LeftHandThumb2Scale  prismatic LeftHandThumb2                0          0          0          1          0          0        1.0
+  LeftHandThumb3       revolute  LeftHandThumb2Scale    -28.3596          0          0          0          1          0        1.0
+  LeftHandThumb3Scale  prismatic LeftHandThumb3                0          0          0          1          0          0        1.0
+  LeftHandThumbEE      revolute  LeftHandThumb3Scale    -26.2776          0          0          0          1          0        1.0
+  LeftHandIndex1_tz    prismatic LeftHandScale          -85.6683          0   -18.4515          0          0          1        1.0
+  LeftHandIndex1_ry    revolute  LeftHandIndex1_tz             0          0          0          0          1          0        1.0
+  LeftHandIndex1       revolute  LeftHandIndex1_ry             0          0          0          0          0         -1        1.0
+  LeftHandIndex2       revolute  LeftHandIndex1         -34.9788          0          0          0          0         -1        1.0
+  LeftHandIndex2Scale  prismatic LeftHandIndex2                0          0          0          1          0          0        1.0
+  LeftHandIndex3       revolute  LeftHandIndex2Scale    -28.3596          0          0          0          0         -1        1.0
+  LeftHandIndex3Scale  prismatic LeftHandIndex3                0          0          0          1          0          0        1.0
+  LeftHandIndexEE      revolute  LeftHandIndex3Scale    -15.0158          0          0          0          0         -1        1.0
+  LeftHandMiddle1_tz   prismatic LeftHandScale          -85.6683          0  -0.962074          0          0          1        1.0
+  LeftHandMiddle1_ry   revolute  LeftHandMiddle1_tz            0          0          0          0          1          0        1.0
+  LeftHandMiddle1      revolute  LeftHandMiddle1_ry            0          0          0          0          0         -1        1.0
+  LeftHandMiddle2      revolute  LeftHandMiddle1        -39.3511          0          0          0          0         -1        1.0
+  LeftHandMiddle2Scale prismatic LeftHandMiddle2               0          0          0          1          0          0        1.0
+  LeftHandMiddle3      revolute  LeftHandMiddle2Scale   -32.4109          0          0          0          0         -1        1.0
+  LeftHandMiddle3Scale prismatic LeftHandMiddle3               0          0          0          1          0          0        1.0
+  LeftHandMiddleEE     revolute  LeftHandMiddle3Scale   -15.0158          0          0          0          0         -1        1.0
+  LeftHandRing1_tz     prismatic LeftHandScale           -81.296          0    16.5273          0          0          1        1.0
+  LeftHandRing1_ry     revolute  LeftHandRing1_tz              0          0          0          0          1          0        1.0
+  LeftHandRing1        revolute  LeftHandRing1_ry              0          0          0          0          0         -1        1.0
+  LeftHandRing2        revolute  LeftHandRing1          -39.3511          0          0          0          0         -1        1.0
+  LeftHandRing2Scale   prismatic LeftHandRing2                 0          0          0          1          0          0        1.0
+  LeftHandRing3        revolute  LeftHandRing2Scale     -28.3596          0          0          0          0         -1        1.0
+  LeftHandRing3Scale   prismatic LeftHandRing3                 0          0          0          1          0          0        1.0
+  LeftHandRingEE       revolute  LeftHandRing3Scale     -15.0158          0          0          0          0         -1        1.0
+  LeftHandPinky1_tz    prismatic LeftHandScale          -76.9236          0    34.0167          0          0          1        1.0
+  LeftHandPinky1_ry    revolute  LeftHandPinky1_tz             0          0          0          0          1          0        1.0
+  LeftHandPinky1       revolute  LeftHandPinky1_ry             0          0          0          0          0         -1        1.0
+  LeftHandPinky2       revolute  LeftHandPinky1         -34.9788          0          0          0          0         -1        1.0
+  LeftHandPinky2Scale  prismatic LeftHandPinky2                0          0          0          1          0          0        1.0
+  LeftHandPinky3       revolute  LeftHandPinky2Scale    -16.2054          0          0          0          0         -1        1.0
+  LeftHandPinky3Scale  prismatic LeftHandPinky3                0          0          0          1          0          0        1.0
+  LeftHandPinkyEE      revolute  LeftHandPinky3Scale    -15.0158          0          0          0          0         -1        1.0
+  LeftHandEE           revolute  LeftHand_ry            -82.1306          0 -0.00037384          0          1          0        1.0
+  RightShoulder_ry     revolute  GlobalScale             37.6683    73.5927   -79.3476          0          1          0        1.0
+  RightShoulder_rz     revolute  RightShoulder_ry              0          0          0  -0.460401          0   0.887711        1.0
+  RightArm_tx          prismatic RightShoulder_rz        95.7403   -22.4963    28.8618          1          0          0        1.0
+  RightArm_rz          revolute  RightArm_tx                   0          0          0          0          0          1        1.0
+  RightArm_rx          revolute  RightArm_rz                   0          0          0          0         -1          0        1.0
+  RightArm_ry          revolute  RightArm_rx                   0          0          0          1          0          0        1.0
+  RightArmScale        prismatic RightArm_ry                   0          0          0          1          0          0        1.0
+  RightForeArm_rx      revolute  RightArmScale           261.346          0          0          0         -1          0        1.0
+  RightForeArm_rz      revolute  RightForeArm_rx               0          0          0          0          0          1        1.0
+  RightForeArmScale    prismatic RightForeArm_rz               0          0          0          1          0          0        1.0
+  RightForeArmRoll     revolute  RightForeArmScale             0          0          0         -1          0          0        1.0
+  RightHand_rx         revolute  RightForeArmRoll        225.046          0          0          0         -1          0        1.0
+  RightHand_ry         revolute  RightHand_rx                  0          0          0          0          0          1        1.0
+  RightHandScale       prismatic RightHand_ry                  0          0          0          1          0          0        1.0
+  RightHandThumb1_rz   revolute  RightHandScale          15.7108   -8.74469   -22.8238          0          0          1        1.0
+  RightHandThumb1      revolute  RightHandThumb1_rz            0          0          0          0         -1          0        1.0
+  RightHandThumb2      revolute  RightHandThumb1         34.9788   -17.4894          0          0         -1          0        1.0
+  RightHandThumb2Scale prismatic RightHandThumb2               0          0          0          1          0          0        1.0
+  RightHandThumb3      revolute  RightHandThumb2Scale    28.3596          0          0          0         -1          0        1.0
+  RightHandThumb3Scale prismatic RightHandThumb3               0          0          0          1          0          0        1.0
+  RightHandThumbEE     revolute  RightHandThumb3Scale    26.2776          0          0          0         -1          0        1.0
+  RightHandIndex1_tz   prismatic RightHandScale          85.6683          0   -18.4515          0          0          1        1.0
+  RightHandIndex1_ry   revolute  RightHandIndex1_tz            0          0          0          0         -1          0        1.0
+  RightHandIndex1      revolute  RightHandIndex1_ry            0          0          0          0          0          1        1.0
+  RightHandIndex2      revolute  RightHandIndex1         34.9788          0          0          0          0          1        1.0
+  RightHandIndex2Scale prismatic RightHandIndex2               0          0          0          1          0          0        1.0
+  RightHandIndex3      revolute  RightHandIndex2Scale    28.3596          0          0          0          0          1        1.0
+  RightHandIndex3Scale prismatic RightHandIndex3               0          0          0          1          0          0        1.0
+  RightHandIndexEE     revolute  RightHandIndex3Scale    15.0158          0          0          0          0          1        1.0
+  RightHandMiddle1_tz  prismatic RightHandScale          85.6683          0  -0.962074          0          0          1        1.0
+  RightHandMiddle1_ry  revolute  RightHandMiddle1_tz           0          0          0          0         -1          0        1.0
+  RightHandMiddle1     revolute  RightHandMiddle1_ry           0          0          0          0          0          1        1.0
+  RightHandMiddle2     revolute  RightHandMiddle1        39.3511          0          0          0          0          1        1.0
+  RightHandMiddle2Scale prismatic RightHandMiddle2              0          0          0          1          0          0        1.0
+  RightHandMiddle3     revolute  RightHandMiddle2Scale    32.4109          0          0          0          0          1        1.0
+  RightHandMiddle3Scale prismatic RightHandMiddle3              0          0          0          1          0          0        1.0
+  RightHandMiddleEE    revolute  RightHandMiddle3Scale    15.0158          0          0          0          0          1        1.0
+  RightHandRing1_tz    prismatic RightHandScale           81.296          0    16.5273          0          0          1        1.0
+  RightHandRing1_ry    revolute  RightHandRing1_tz             0          0          0          0         -1          0        1.0
+  RightHandRing1       revolute  RightHandRing1_ry             0          0          0          0          0          1        1.0
+  RightHandRing2       revolute  RightHandRing1          39.3511          0          0          0          0          1        1.0
+  RightHandRing2Scale  prismatic RightHandRing2                0          0          0          1          0          0        1.0
+  RightHandRing3       revolute  RightHandRing2Scale     28.3596          0          0          0          0          1        1.0
+  RightHandRing3Scale  prismatic RightHandRing3                0          0          0          1          0          0        1.0
+  RightHandRingEE      revolute  RightHandRing3Scale     15.0158          0          0          0          0          1        1.0
+  RightHandPinky1_tz   prismatic RightHandScale          76.9236          0    34.0167          0          0          1        1.0
+  RightHandPinky1_ry   revolute  RightHandPinky1_tz            0          0          0          0         -1          0        1.0
+  RightHandPinky1      revolute  RightHandPinky1_ry            0          0          0          0          0          1        1.0
+  RightHandPinky2      revolute  RightHandPinky1         34.9788          0          0          0          0          1        1.0
+  RightHandPinky2Scale prismatic RightHandPinky2               0          0          0          1          0          0        1.0
+  RightHandPinky3      revolute  RightHandPinky2Scale    16.2054          0          0          0          0          1        1.0
+  RightHandPinky3Scale prismatic RightHandPinky3               0          0          0          1          0          0        1.0
+  RightHandPinkyEE     revolute  RightHandPinky3Scale    15.0158          0          0          0          0          1        1.0
+  RightHandEE          revolute  RightHand_ry            82.1306          0 -0.00037384          0         -1          0        1.0
+  LeftUpLeg_tx         prismatic Spine_rx                -82.164   -85.5385    -43.336         -1          0          0        1.0
+  LeftUpLeg_ty         prismatic LeftUpLeg_tx                  0          0          0          0          1          0        1.0
+  LeftUpLeg_rx         revolute  LeftUpLeg_ty                  0          0          0         -1          0          0        1.0
+  LeftUpLeg_rz         revolute  LeftUpLeg_rx                  0          0          0          0          0          1        1.0
+  LeftUpLeg_ry         revolute  LeftUpLeg_rz                  0          0          0          0          1          0        1.0
+  LeftLegScale         prismatic LeftUpLeg_ry                  0          0          0          1          0          0        1.0
+  LeftLeg_rx           revolute  LeftLegScale                  0   -384.168          0          1          0          0        1.0
+  LeftLeg_ry           revolute  LeftLeg_rx                    0          0          0          0          1          0        1.0
+  LeftLeg_rz           revolute  LeftLeg_ry                    0          0          0          0          0          1        1.0
+  LeftLowLegScale      prismatic LeftLeg_rz                    0          0          0          0          1          0        1.0
+  LeftFoot_rx          revolute  LeftLowLegScale               0   -372.843          0          1          0          0        1.0
+  LeftFoot_ry          revolute  LeftFoot_rx                   0          0          0          0          1          0        1.0
+  LeftFoot_rz          revolute  LeftFoot_ry                   0          0          0          0          0          1        1.0
+  LeftFootScale        prismatic LeftFoot_rz                   0          0          0          1          0          0        1.0
+  LeftToeBase_rx       revolute  LeftFootScale            2.6573   -37.5602   -133.662          1          0          0        1.0
+  LeftFootEE           revolute  LeftToeBase_rx          1.06423   -12.7735   -79.6735          0          1          0        1.0
+  RightUpLeg_tx        prismatic Spine_rx                 82.164   -85.5385    -43.336          1          0          0        1.0
+  RightUpLeg_ty        prismatic RightUpLeg_tx                 0          0          0          0          1          0        1.0
+  RightUpLeg_rx        revolute  RightUpLeg_ty                 0          0          0         -1          0          0        1.0
+  RightUpLeg_rz        revolute  RightUpLeg_rx                 0          0          0          0          0         -1        1.0
+  RightUpLeg_ry        revolute  RightUpLeg_rz                 0          0          0          0         -1          0        1.0
+  RightLegScale        prismatic RightUpLeg_ry                 0          0          0          1          0          0        1.0
+  RightLeg_rx          revolute  RightLegScale                 0   -384.168          0          1          0          0        1.0
+  RightLeg_ry          revolute  RightLeg_rx                   0          0          0          0         -1          0        1.0
+  RightLeg_rz          revolute  RightLeg_ry                   0          0          0          0          0         -1        1.0
+  RightLowLegScale     prismatic RightLeg_rz                   0          0          0          0          1          0        1.0
+  RightFoot_rx         revolute  RightLowLegScale              0   -372.843          0          1          0          0        1.0
+  RightFoot_ry         revolute  RightFoot_rx                  0          0          0          0         -1          0        1.0
+  RightFoot_rz         revolute  RightFoot_ry                  0          0          0          0          0          1        1.0
+  RightFootScale       prismatic RightFoot_rz                  0          0          0          1          0          0        1.0
+  RightToeBase_rx      revolute  RightFootScale          -2.6573   -37.5602   -133.662          1          0          0        1.0
+  RightFootEE          revolute  RightToeBase_rx        -1.06423   -12.7735   -79.6735          0         -1          0        1.0
+markers: 97
+  LeftBody01           LeftLegScale         point      -68.3302   -90.0104     18.459    122.214          1          1          0
+  RightBody01          RightLegScale        point       68.3302   -90.0104     18.459    122.214          1          1          0
+  LeftBody02           Spine1_rx            point      -48.1788    71.2252     4.0854    113.875          0          0          1
+  RightBody02          Spine1_rx            point       48.1788    71.2252     4.0854    113.875          0          0          1
+  LeftBody03           Spine3_rx            point      -40.6464    213.791   -12.3482    107.229          0          0          1
+  RightBody03          Spine3_rx            point       40.6464    213.791   -12.3482    107.229          0          1          0
+  LeftBody04           GlobalScale          point      -50.3914    349.647     -5.032    110.132          0          1          0
+  RightBody04          GlobalScale          point       50.3914    349.647     -5.032    110.132          0          1          0
+  LeftLeg01            LeftLegScale         point      -87.0382   -433.594    27.3292    69.4739          0          0          1
+  LeftLeg02            LeftLegScale         point      -89.6709   -342.769    23.0934    81.5688          0          0          1
+  LeftLeg03            LeftLegScale         point      -93.4974   -236.774    23.2069    99.2148          0          0          1
+  LeftLowLeg01         LeftLowLegScale      point      -98.3896   -531.625    19.5057    60.4766          0          1          0
+  LeftLowLeg02         LeftLowLegScale      point      -82.4008   -869.981     39.583    45.3344          0          1          0
+  LeftLowLeg03         LeftLowLegScale      point      -88.6102   -808.668    48.9757     46.949          0          1          0
+  LeftLowLeg04         LeftLowLegScale      point      -92.3777   -741.345    57.8787    54.9578          1          1          1
+  LeftLowLeg05         LeftLowLegScale      point      -95.1202   -667.171    63.8413    58.2151          0          0          1
+  LeftLowLeg06         LeftLowLegScale      point      -101.616   -595.747    59.4049    56.0658          0          1          0
+  LeftFoot01           LeftFootScale        point      -89.5937   -965.714    -13.616    48.0006          0          1          0
+  LeftFoot02           LeftFootScale        point      -84.1541   -973.018    45.6059    44.4021          0          0          1
+  LeftFoot03           LeftFootScale        point      -121.968   -975.328   -68.0767    30.0014          1          0          1
+  LeftFoot04           LeftFootScale        point      -76.8052    -970.06   -74.6096    30.0002          0          1          1
+  LeftFoot05           LeftFootScale        point      -84.7196    -925.06    28.4886     48.001          0          1          1
+  LeftToes01           LeftToeBase_rx       point      -80.8799   -970.827   -120.926    26.4005          0          1          1
+  LeftToes02           LeftToeBase_rx       point      -120.871   -974.911   -116.444    26.4006          0          1          1
+  LeftToes03           LeftToeBase_rx       point      -81.3979    -971.37   -165.116    20.9692          0          1          1
+  LeftToes04           LeftToeBase_rx       point      -116.858   -975.133   -158.389    17.5694          0          1          1
+  RightLeg01           RightLegScale        point       87.0382   -433.594    27.3292    69.4739          0          1          1
+  RightLeg02           RightLegScale        point       89.6709   -342.769    23.0934    81.5688          0          1          1
+  RightLeg03           RightLegScale        point       93.4974   -236.774    23.2069    99.2148          0          1          1
+  RightLowLeg01        RightLowLegScale     point       98.3896   -531.625    19.5057    60.4766          0          1          1
+  RightLowLeg02        RightLowLegScale     point       82.4008   -869.981     39.583    45.3344          0          1          1
+  RightLowLeg03        RightLowLegScale     point       88.6102   -808.668    48.9757     46.949          0          1          1
+  RightLowLeg04        RightLowLegScale     point       92.3777   -741.345    57.8787    54.9578          0          1          1
+  RightLowLeg05        RightLowLegScale     point       95.1202   -667.171    63.8413    58.2151          0          1          1
+  RightLowLeg06        RightLowLegScale     point       101.616   -595.747    59.4049    56.0658          0          1          1
+  RightFoot01          RightFootScale       point       89.5937   -965.714    -13.616    48.0006          0          1          1
+  RightFoot02          RightFootScale       point       84.1541   -973.018    45.6059    44.4021          0          1          1
+  RightFoot03          RightFootScale       point       121.968   -975.328   -68.0767    30.0014          0          1          1
+  RightFoot04          RightFootScale       point       76.8052    -970.06   -74.6096    30.0002          0          1          1
+  RightFoot05          RightFootScale       point       84.7196    -925.06    28.4886     48.001          0          1          1
+  RightToes01          RightToeBase_rx      point       80.8799   -970.827   -120.926    26.4005          0          1          1
+  RightToes02          RightToeBase_rx      point       120.871   -974.911   -116.444    26.4006          0          1          1
+  RightToes03          RightToeBase_rx      point       81.3979    -971.37   -165.116    20.9692          0          1          1
+  RightToes04          RightToeBase_rx      point       116.858   -975.133   -158.389    17.5694          0          1          1
+  LeftArm01            LeftArmScale         point       -225.18    464.806    26.4359    52.9026          0          1          1
+  LeftArm02            LeftArmScale         point       -143.47    469.865    24.4396    54.8983          0          1          1
+  LeftArm03            LeftArmScale         point      -364.217    451.906    14.9837    43.4455          0          1          1
+  LeftArm04            LeftArmScale         point      -302.955    453.618    18.7818    46.2056          0          1          1
+  LeftForeArm01        LeftForeArmRoll      point       -431.79    449.875     13.341    43.8923          0          1          1
+  LeftForeArm02        LeftForeArmRoll      point      -498.866    451.113    14.1587    44.4001          0          1          1
+  LeftForeArm03        LeftForeArmRoll      point      -552.071    455.228    11.5766    37.2005          0          1          1
+  LeftForeArm04        LeftForeArmRoll      point      -601.035     459.92    7.16027    37.2002          0          1          1
+  LeftForeArm05        LeftForeArmRoll      point      -656.506    462.757    2.31553    29.9329          0          1          1
+  LeftHand01           LeftHand_ry          point      -718.976    458.605   -4.50707    30.5979          0          1          1
+  LeftHand02           LeftHand_ry          point      -702.182    466.302    33.9679    29.9748          0          1          1
+  LeftHand03           LeftHand_ry          point      -670.442    453.379    0.04007    33.7195          0          1          1
+  LeftHand04           LeftHand_ry          point      -654.849    460.803    21.6728    30.0004          0          1          1
+  LeftHand05           LeftHand_ry          point      -769.952    460.239   -7.07971    25.1953          0          1          1
+  LeftHand06           LeftHand_ry          point      -754.359    467.662     14.553    22.4973          0          1          1
+  RightArm01           RightArmScale        point        225.18    464.806    26.4359    52.9026          0          1          1
+  RightArm02           RightArmScale        point        143.47    469.865    24.4396    54.8983          0          1          1
+  RightArm03           RightArmScale        point       364.217    451.906    14.9837    43.4455          0          1          1
+  RightArm04           RightArmScale        point       302.955    453.618    18.7818    46.2056          0          1          1
+  RightForeArm01       RightForeArmRoll     point        431.79    449.875     13.341    43.8923          0          1          1
+  RightForeArm02       RightForeArmRoll     point       498.866    451.113    14.1587    44.4001          0          1          1
+  RightForeArm03       RightForeArmRoll     point       552.071    455.228    11.5766    37.2005          0          1          1
+  RightForeArm04       RightForeArmRoll     point       601.035     459.92    7.16026    37.2002          0          1          1
+  RightForeArm05       RightForeArmRoll     point       656.506    462.757    2.31553    29.9329          0          1          1
+  RightHand01          RightHand_ry         point       718.976    458.605   -4.50707    30.5979          0          1          1
+  RightHand02          RightHand_ry         point       702.182    466.302    33.9679    29.9748          0          1          1
+  RightHand03          RightHand_ry         point       670.442    453.379    0.04007    33.7195          0          1          1
+  RightHand04          RightHand_ry         point       654.849    460.803    21.6728    30.0004          0          1          1
+  RightHand05          RightHand_ry         point       769.952    460.239   -7.07971    25.1953          0          1          1
+  RightHand06          RightHand_ry         point       754.359    467.662     14.553    22.4973          0          1          1
+  LeftShoulder01       LeftShoulder_rz      point      -68.3728    461.833    22.9378    82.2008          0          1          1
+  RightShoulder01      RightShoulder_rz     point       68.3728    461.833    22.9378    82.2008          0          1          1
+  Neck01               Neck_rx              point             0     550.62   -25.0342    69.6004          0          1          1
+  Head00               Head_rx              point            50        714        -40    48.0016          0          1          1
+  Head01               Head_rx              point            25        714    20.6218    48.0004          0          1          1
+  Head02               Head_rx              point           -25        714    20.6218    48.0004          0          1          1
+  Head03               Head_rx              point           -50        714        -40    48.0016          0          1          1
+  Face04               Head_rx              point           -25        714   -100.622    48.0014          0          1          1
+  Face05               Head_rx              point            25        714   -100.622    48.0014          0          1          1
+  Head10               Head_rx              point            50        660        -40    48.0006          0          1          1
+  Head11               Head_rx              point            25        660    20.6218     48.001          0          1          1
+  Head12               Head_rx              point           -25        660    20.6218     48.001          0          1          1
+  Head13               Head_rx              point           -50        660        -40    48.0006          0          1          1
+  Face14               Head_rx              point           -25        660   -100.622    48.0009          0          1          1
+  Face15               Head_rx              point            25        660   -100.622    48.0009          0          1          1
+  Head20               Head_rx              point            40        610        -40    36.0002          0          1          1
+  Head21               Head_rx              point            20        610    8.49742    36.0007          0          1          1
+  Head22               Head_rx              point           -20        610    8.49742    36.0007          0          1          1
+  Head23               Head_rx              point           -40        610        -40    36.0002          0          1          1
+  Face24               Head_rx              point           -20        610   -88.4974    36.0004          0          1          1
+  Face25               Head_rx              point            20        610   -88.4974    36.0004          0          1          1
+  Head31               Head_rx              point             0        765        -70    42.0036          0          1          1
+  Head32               Head_rx              point             0        765        -10    42.0017          0          1          1
+scaling joints: 0
+dofs: 107
+  translate_x           1
+      nolimits
+      Root_tx                    1000
+  translate_y           1
+      nolimits
+      Root_ty                    1000
+  translate_z           1
+      nolimits
+      Root_tz                    1000
+  rotate_y              1
+      nolimits
+      Root_ry                       3
+  rotate_z              1
+      nolimits
+      Root_rz                       3
+  rotate_x              1
+      nolimits
+      Root_rx                       3
+  spine_twist           5
+      nolimits
+      Spine4_ry                     0
+      Spine3_ry                   0.1
+      Spine2_ry                   0.6
+      Spine1_ry                   0.2
+      Spine_ry                    0.1
+  spine_lean            5
+      limits                    -0.55       0.55
+      Spine4_rz                  0.05
+      Spine3_rz                   0.2
+      Spine2_rz                  0.25
+      Spine1_rz                   0.2
+      Spine_rz                   0.15
+  spine_bend            5
+      limits                     -0.8       0.25
+      Spine4_rx                  0.05
+      Spine3_rx                   0.2
+      Spine2_rx                  0.15
+      Spine1_rx                  0.35
+      Spine_rx                   0.05
+  spine_stretch         0
+      nolimits
+  head_twist            2
+      limits                     -1.4        1.4
+      Neck_ry                   0.333
+      Head_ry                   0.667
+  head_lean             2
+      limits                     -0.5        0.5
+      Neck_rz                     0.8
+      Head_rz                     0.2
+  head_bend             5
+      limits                    -0.65       0.65
+      Spine4_rx                  0.35
+      Spine3_rx                 -0.15
+      Spine2_rx                 -0.05
+      Neck_rx                       1
+      Head_rx                     0.3
+  left_clavicle_y       1
+      limits                     -0.4        0.5
+      LeftShoulder_ry               1
+  left_clavicle_z       1
+      limits                    -0.05        0.4
+      LeftShoulder_rz               1
+  left_shoulder_y       1
+      nolimits
+      LeftArm_rx                    1
+  left_shoulder_z       1
+      limits                      -10         10
+      LeftArm_rz                    1
+  left_shoulder_twist   1
+      nolimits
+      LeftArm_ry                    1
+  left_elbow            1
+      limits                     -2.7       -0.1
+      LeftForeArm_rx                1
+  left_elbow_virtual    1
+      nolimits
+      LeftForeArm_rz                1
+  left_forearm_twist    1
+      limits                     -2.7        1.8
+      LeftForeArmRoll               1
+  left_hand_y           1
+      limits                     -0.5        0.5
+      LeftHand_rx                   1
+  left_hand_z           1
+      limits                     -1.3        1.3
+      LeftHand_ry                   1
+  right_clavicle_y      1
+      limits                     -0.4        0.5
+      RightShoulder_ry              1
+  right_clavicle_z      1
+      limits                    -0.05        0.4
+      RightShoulder_rz              1
+  right_shoulder_y      1
+      nolimits
+      RightArm_rx                   1
+  right_shoulder_z      1
+      limits                      -10         10
+      RightArm_rz                   1
+  right_shoulder_twist  1
+      nolimits
+      RightArm_ry                   1
+  right_elbow           1
+      limits                     -2.7       -0.1
+      RightForeArm_rx               1
+  right_elbow_virtual   1
+      nolimits
+      RightForeArm_rz               1
+  right_forearm_twist   1
+      limits                     -2.7        1.8
+      RightForeArmRoll              1
+  right_hand_y          1
+      limits                     -0.5        0.5
+      RightHand_rx                  1
+  right_hand_z          1
+      limits                     -1.3        1.3
+      RightHand_ry                  1
+  left_hip_x            1
+      limits                      -10         10
+      LeftUpLeg_rx                  1
+  left_hip_z            1
+      nolimits
+      LeftUpLeg_rz                  1
+  left_hip_y            1
+      nolimits
+      LeftUpLeg_ry                  1
+  left_knee             1
+      limits                       -3        0.2
+      LeftLeg_rx                    1
+  left_knee_varus       1
+      limits                 -0.38397     0.4887
+      LeftLeg_rz                    1
+  left_knee_twist       1
+      limits                  -0.6144     0.8029
+      LeftLeg_ry                    1
+  left_ankle_x          1
+      limits                     -0.4        0.7
+      LeftFoot_rx                   3
+  left_ankle_twist      1
+      nolimits
+      LeftFoot_ry                   1
+  left_ankle_z          1
+      limits                    -0.25       0.25
+      LeftFoot_rz                   1
+  left_toes             1
+      limits                     -0.7        0.5
+      LeftToeBase_rx              0.3
+  right_hip_x           1
+      limits                      -10         10
+      RightUpLeg_rx                 1
+  right_hip_z           1
+      nolimits
+      RightUpLeg_rz                 1
+  right_hip_y           1
+      nolimits
+      RightUpLeg_ry                 1
+  right_knee            1
+      limits                       -3        0.2
+      RightLeg_rx                   1
+  right_knee_varus      1
+      limits                 -0.38397     0.4887
+      RightLeg_rz                   1
+  right_knee_twist      1
+      limits                  -0.6144     0.8029
+      RightLeg_ry                   1
+  right_ankle_x         1
+      limits                     -0.4        0.7
+      RightFoot_rx                  3
+  right_ankle_twist     1
+      nolimits
+      RightFoot_ry                  1
+  right_ankle_z         1
+      limits                    -0.25       0.25
+      RightFoot_rz                  1
+  right_toes            1
+      limits                     -0.7        0.5
+      RightToeBase_rx             0.3
+  left_index_stretch    1
+      nolimits
+      LeftHandIndex1_ry             1
+  left_middle_stretch   1
+      nolimits
+      LeftHandMiddle1_ry            1
+  left_ring_stretch     1
+      nolimits
+      LeftHandRing1_ry              1
+  left_pinky_stretch    1
+      nolimits
+      LeftHandPinky1_ry             1
+  left_index_flex1      1
+      limits                    -1.57        0.3
+      LeftHandIndex1                3
+  left_index_flex2      1
+      limits                    -1.57          0
+      LeftHandIndex2                3
+  left_index_flex3      1
+      limits                    -1.57          0
+      LeftHandIndex3                3
+  left_middle_flex1     1
+      limits                    -1.57        0.3
+      LeftHandMiddle1               3
+  left_middle_flex2     1
+      limits                    -1.57          0
+      LeftHandMiddle2               3
+  left_middle_flex3     1
+      limits                    -1.57          0
+      LeftHandMiddle3               3
+  left_ring_flex1       1
+      limits                    -1.57        0.3
+      LeftHandRing1                 3
+  left_ring_flex2       1
+      limits                    -1.57          0
+      LeftHandRing2                 3
+  left_ring_flex3       1
+      limits                    -1.57          0
+      LeftHandRing3                 3
+  left_pinky_flex1      1
+      limits                    -1.57        0.3
+      LeftHandPinky1                3
+  left_pinky_flex2      1
+      limits                    -1.57          0
+      LeftHandPinky2                3
+  left_pinky_flex3      1
+      limits                    -1.57          0
+      LeftHandPinky3                3
+  left_thumb_z          1
+      nolimits
+      LeftHandThumb1_rz             1
+  left_thumb_flex1      1
+      nolimits
+      LeftHandThumb1                3
+  left_thumb_flex2      1
+      nolimits
+      LeftHandThumb2                3
+  left_thumb_flex3      1
+      nolimits
+      LeftHandThumb3                3
+  right_index_stretch   1
+      nolimits
+      RightHandIndex1_ry            1
+  right_middle_stretch  1
+      nolimits
+      RightHandMiddle1_ry           1
+  right_ring_stretch    1
+      nolimits
+      RightHandRing1_ry             1
+  right_pinky_stretch   1
+      nolimits
+      RightHandPinky1_ry            1
+  right_index_flex1     1
+      limits                    -1.57        0.3
+      RightHandIndex1               3
+  right_index_flex2     1
+      limits                    -1.57          0
+      RightHandIndex2               3
+  right_index_flex3     1
+      limits                    -1.57          0
+      RightHandIndex3               3
+  right_middle_flex1    1
+      limits                    -1.57        0.3
+      RightHandMiddle1              3
+  right_middle_flex2    1
+      limits                    -1.57          0
+      RightHandMiddle2              3
+  right_middle_flex3    1
+      limits                    -1.57          0
+      RightHandMiddle3              3
+  right_ring_flex1      1
+      limits                    -1.57        0.3
+      RightHandRing1                3
+  right_ring_flex2      1
+      limits                    -1.57          0
+      RightHandRing2                3
+  right_ring_flex3      1
+      limits                    -1.57          0
+      RightHandRing3                3
+  right_pinky_flex1     1
+      limits                    -1.57        0.3
+      RightHandPinky1               3
+  right_pinky_flex2     1
+      limits                    -1.57          0
+      RightHandPinky2               3
+  right_pinky_flex3     1
+      limits                    -1.57          0
+      RightHandPinky3               3
+  right_thumb_z         1
+      nolimits
+      RightHandThumb1_rz            1
+  right_thumb_flex1     1
+      nolimits
+      RightHandThumb1               3
+  right_thumb_flex2     1
+      nolimits
+      RightHandThumb2               3
+  right_thumb_flex3     1
+      nolimits
+      RightHandThumb3               3
+  global_scale          1
+      nolimits
+      GlobalScale                   1
+  shoulder_scale        2
+      nolimits
+      LeftArm_tx                 1000
+      RightArm_tx                1000
+  arm_scale             2
+      limits                     -0.2        0.2
+      LeftArmScale                  1
+      RightArmScale                 1
+  lowarm_scale          2
+      limits                     0.06       0.17
+      LeftForeArmScale              1
+      RightForeArmScale             1
+  hip_scale             2
+      nolimits
+      LeftUpLeg_tx               1000
+      RightUpLeg_tx              1000
+  leg_scale             2
+      limits                    -0.17       0.17
+      LeftLegScale                  1
+      RightLegScale                 1
+  lowleg_scale          2
+      nolimits
+      LeftLowLegScale               1
+      RightLowLegScale              1
+  foot_scale            2
+      limits                     -0.2        0.2
+      LeftFootScale                 1
+      RightFootScale                1
+  hip_updown            2
+      nolimits
+      LeftUpLeg_ty               1000
+      RightUpLeg_ty              1000
+  hand_scale            2
+      nolimits
+      LeftHandScale                 1
+      RightHandScale                1
+  finger_scale         10
+      nolimits
+      LeftHandThumb2Scale           1
+      LeftHandIndex2Scale           1
+      LeftHandMiddle2Scale          1
+      LeftHandRing2Scale            1
+      LeftHandPinky2Scale           1
+      RightHandThumb2Scale          1
+      RightHandIndex2Scale          1
+      RightHandMiddle2Scale          1
+      RightHandRing2Scale           1
+      RightHandPinky2Scale          1
+  fingerEE_scale       10
+      nolimits
+      LeftHandThumb3Scale           1
+      LeftHandIndex3Scale           1
+      LeftHandMiddle3Scale          1
+      LeftHandRing3Scale            1
+      LeftHandPinky3Scale           1
+      RightHandThumb3Scale          1
+      RightHandIndex3Scale          1
+      RightHandMiddle3Scale          1
+      RightHandRing3Scale           1
+      RightHandPinky3Scale          1
+  hand_knuckles_width   6
+      nolimits
+      LeftHandIndex1_tz           200
+      LeftHandRing1_tz           -200
+      LeftHandPinky1_tz          -400
+      RightHandIndex1_tz          200
+      RightHandRing1_tz          -200
+      RightHandPinky1_tz         -400
+  hand_knuckles_offset  8
+      nolimits
+      LeftHandIndex1_tz           200
+      LeftHandMiddle1_tz          200
+      LeftHandRing1_tz            200
+      LeftHandPinky1_tz           200
+      RightHandIndex1_tz          200
+      RightHandMiddle1_tz         200
+      RightHandRing1_tz           200
+      RightHandPinky1_tz          200
+textureEntries: 0

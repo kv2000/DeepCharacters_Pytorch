@@ -1,0 +1,9 @@
+skeletool character file v1.0
+skeleton
+  ddc.skeleton
+mesh
+  ddc.obj
+skin
+  ddc.skin
+pose
+  ddc.motion
