@@ -72,7 +72,7 @@ python 2_test_deformable_character.py
 - [x] Example for skeleton
 - [x] Example for the deformable character
 - [x] Example for the learnable embeeded deformable character
-- [ ] More to come
+- [ ] More related to other projects to come
 
 ---
 
@@ -106,3 +106,9 @@ If you find our work useful for your research, please, please, and please, consi
 }
 ```
 
+---
+
+# Contact
+For questions, clarifications, feel free to get in touch with:
+Heming Zhu: hezhu@mpi-inf.mpg.de
+Marc Habermann: mhaberma@mpi-inf.mpg.de
