@@ -57,7 +57,7 @@ python 1_test_character.py
 ```
 
 ### Testing the Character with learnable deformations
-Also we can apply the learnable deformation learned with SpatialGNN. You may download the weights  <a href=""><strong>Here</strong></a>, extract and put the checkpoint under ```./examples/checkpoints/``` folder. 
+Also we can apply the learnable deformation learned with SpatialGNN. You may download the sample weights  <a href="https://nextcloud.mpi-klsb.mpg.de/index.php/s/5kiSafBDfsaHjXE"><strong>Here</strong></a>, extract and put the checkpoint under ```./examples/checkpoints/``` folder. 
 Then we can generate the **posed/unposed character with learned defomration** through running the following blocks. 
 
 ```bash
