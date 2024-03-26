@@ -115,4 +115,4 @@ Marc Habermann: mhaberma@mpi-inf.mpg.de
 
 ---
 # License
-Deep Characters Pyotrch is under [CC-BY-NC](https://creativecommons.org/licenses/by-nc/4.0/) license. The license applies to the pre-trained models as well.
+Deep Characters Pyotrch is under [CC-BY-NC](https://creativecommons.org/licenses/by-nc/4.0/) license. The license applies to the pre-trained models and the metadata as well.
