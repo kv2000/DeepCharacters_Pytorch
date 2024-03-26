@@ -4,7 +4,7 @@ Pytorch implementation of the components in <a href="https://people.mpi-inf.mpg.
 ---
 
 # News
-**2024-3-29** The inital version **Deep Characters Pytorch** is available, including an minimal runnable version of the <strong><font color=red>skeleton</font></strong> and the <strong><font color=blue>embedded deformed clothed human character</font></strong> for the <a href="https://people.mpi-inf.mpg.de/~mhaberma/projects/2021-ddc/"><strong>DynaCap</strong></a>, <a href="https://people.mpi-inf.mpg.de/~mhaberma/projects/2021-ddc/"><strong>TriHuman</strong></a>, and <a href="https://people.mpi-inf.mpg.de/~mhaberma/projects/2021-ddc/"><strong>ASH</strong></a> dataset. Moreover, we provide <strong><font color=green>GCN-based deformation network</font></strong> mentioned in the paper.
+**2024-3-29** The inital version **Deep Characters Pytorch** is available, including an minimal runnable version of the <strong><font color=red>skeleton</font></strong> and the <strong><font color=blue>embedded deformed clothed human character</font></strong> for the <a href="https://people.mpi-inf.mpg.de/~mhaberma/projects/2021-ddc/"><strong>DynaCap</strong></a>, <a href="https://vcai.mpi-inf.mpg.de/projects/trihuman/"><strong>TriHuman</strong></a>, and <a href="https://vcai.mpi-inf.mpg.de/projects/ash/"><strong>ASH</strong></a> dataset. Moreover, we provide <strong><font color=green>GCN-based deformation network</font></strong> mentioned in the paper.
 
 ---
 # Installation
