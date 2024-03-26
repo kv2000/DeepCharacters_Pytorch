@@ -92,10 +92,6 @@ If you find our work useful for your research, please, please, and please, consi
 	year = {2021}, 
 	publisher = {ACM}
 } 
-
-```
-
-```
 @inproceedings{deepcap,
     title = {DeepCap: Monocular Human Performance Capture Using Weak Supervision},
     author = {Habermann, Marc and Xu, Weipeng and Zollhoefer, Michael and Pons-Moll, Gerard and Theobalt, Christian},
@@ -104,9 +100,6 @@ If you find our work useful for your research, please, please, and please, consi
     organization = {{IEEE}},
     year = {2020},
 }
-```
-
-```
 @misc{zhu2023trihuman,
     title={TriHuman : A Real-time and Controllable Tri-plane Representation for Detailed Human Geometry and Appearance Synthesis}, 
     author={Heming Zhu and Fangneng Zhan and Christian Theobalt and Marc Habermann},
