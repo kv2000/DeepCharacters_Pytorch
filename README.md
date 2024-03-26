@@ -112,3 +112,7 @@ If you find our work useful for your research, please, please, and please, consi
 For questions, clarifications, feel free to get in touch with:
 Heming Zhu: hezhu@mpi-inf.mpg.de
 Marc Habermann: mhaberma@mpi-inf.mpg.de
+
+---
+# License
+Deep Characters Pyotrch is under [CC-BY-NC](https://creativecommons.org/licenses/by-nc/4.0/) license. The license applies to the pre-trained models as well.
