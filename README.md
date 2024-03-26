@@ -78,7 +78,7 @@ python 2_test_deformable_character.py
 
 # Citation
 
-If you find our work useful for your research, please, please, and please, consider citing <a href="https://vcai.mpi-inf.mpg.de/projects/trihuman/"><strong>TriHuman</strong></a> (where I build this repo for :D), and also the original paper <a href="https://people.mpi-inf.mpg.de/~mhaberma/projects/2021-ddc/"><strong>Real-time Deep Dynamic Characters</strong></a>.
+If you find our work useful for your research, please, please, and please, consider citing <a href="https://vcai.mpi-inf.mpg.de/projects/trihuman/"><strong>TriHuman</strong></a> (where I build this repo for :D), and also the original papers <a href="https://people.mpi-inf.mpg.de/~mhaberma/projects/2021-ddc/"><strong>Real-time Deep Dynamic Characters</strong></a>, and <a href="https://people.mpi-inf.mpg.de/~mhaberma/projects/2021-ddc/"><strong>DeepCap</strong></a>.
 
 ```
 @article{habermann2021,
@@ -93,6 +93,17 @@ If you find our work useful for your research, please, please, and please, consi
 	publisher = {ACM}
 } 
 
+```
+
+```
+@inproceedings{deepcap,
+    title = {DeepCap: Monocular Human Performance Capture Using Weak Supervision},
+    author = {Habermann, Marc and Xu, Weipeng and Zollhoefer, Michael and Pons-Moll, Gerard and Theobalt, Christian},
+    booktitle = {{IEEE} Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month = {jun},
+    organization = {{IEEE}},
+    year = {2020},
+}
 ```
 
 ```
