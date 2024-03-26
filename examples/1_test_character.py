@@ -43,13 +43,12 @@ if __name__ == '__main__':
 
     # load the dofs, remove the end_frame entry to read all
     dof_arr = CSVHelper.load_csv_sequence_2D(
-        preload_conf['train']['skeleton_angles'], type='float', skipRows=1, skipColumns=1 #, end_frame=(1000)
+        preload_conf['dataset']['skeleton_angles'], type='float', skipRows=1, skipColumns=1 #, end_frame=(1000)
     )
         
     #################################################################################################
     # if delta_R, delta_T is set None, then no non-rigid deformation
     # if per_vertex_T is set None, then no non-rigid deformation
-    
     posed_org, posed_eg, posed_delta, org_canonical, eg_canoical, delta_canoical, ret_global_tranform = test_charactor.forward(
         dof = torch.FloatTensor(dof_arr[500:600]).to('cuda'),
         delta_R=None, delta_T=None, per_vertex_T=None
