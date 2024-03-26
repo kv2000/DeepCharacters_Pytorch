@@ -71,7 +71,7 @@ python 2_test_deformable_character.py
 
 - [x] Example for skeleton
 - [x] Example for the deformable character
-- [x] Example for the learnable embeeded deformable character
+- [x] Example for the learnable embedded deformable character
 - [ ] More related to other projects to come
 
 ---
@@ -82,23 +82,15 @@ If you find our work useful for your research, please, please, and please, consi
 
 ```
 @article{habermann2021,
-	author = {Marc Habermann and Lingjie Liu and Weipeng Xu and Michael Zollhoefer and Gerard Pons-Moll and Christian Theobalt},
-	title = {Real-time Deep Dynamic Characters},
-	journal = {ACM Transactions on Graphics}, 
-	month = {aug},
-	volume = {40},
-	number = {4}, 
-	articleno = {94},
-	year = {2021}, 
-	publisher = {ACM}
-} 
-@inproceedings{deepcap,
-    title = {DeepCap: Monocular Human Performance Capture Using Weak Supervision},
-    author = {Habermann, Marc and Xu, Weipeng and Zollhoefer, Michael and Pons-Moll, Gerard and Theobalt, Christian},
-    booktitle = {{IEEE} Conference on Computer Vision and Pattern Recognition (CVPR)},
-    month = {jun},
-    organization = {{IEEE}},
-    year = {2020},
+    author = {Marc Habermann and Lingjie Liu and Weipeng Xu and Michael Zollhoefer and Gerard Pons-Moll and Christian Theobalt},
+    title = {Real-time Deep Dynamic Characters},
+    journal = {ACM Transactions on Graphics}, 
+    month = {aug},
+    volume = {40},
+    number = {4}, 
+    articleno = {94},
+    year = {2021}, 
+    publisher = {ACM}
 }
 @misc{zhu2023trihuman,
     title={TriHuman : A Real-time and Controllable Tri-plane Representation for Detailed Human Geometry and Appearance Synthesis}, 
@@ -108,6 +100,15 @@ If you find our work useful for your research, please, please, and please, consi
     archivePrefix={arXiv},
     primaryClass={cs.CV}
 }
+@inproceedings{deepcap,
+    title = {DeepCap: Monocular Human Performance Capture Using Weak Supervision},
+    author = {Habermann, Marc and Xu, Weipeng and Zollhoefer, Michael and Pons-Moll, Gerard and Theobalt, Christian},
+    booktitle = {{IEEE} Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month = {jun},
+    organization = {{IEEE}},
+    year = {2020},
+}
+
 ```
 
 ---
