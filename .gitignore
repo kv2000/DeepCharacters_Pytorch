@@ -2,7 +2,6 @@
 **/dist
 **/*.egg-info
 **/__pycache__
-**/requirements.txt
 **/**.pth
 ./examples/checkpoints/**.**
 ./examples/mesh_output/**.**
