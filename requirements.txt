@@ -6,3 +6,6 @@ tqdm
 kornia==0.6.8
 einops
 numpy==1.23.4
+icecream
+plyfile
+json
